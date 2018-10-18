@@ -6,8 +6,8 @@ def login():
 	print('Logging in...')
 	sel.initialize()
 	sel.getUrl(env.login['url'])
-	sel.sendKeysById(env.login['user'], 'username')
-	sel.sendKeysById(env.login['pass'], 'password')
+	sel.sendKeysById('username', env.login['user'])
+	sel.sendKeysById('password', env.login['pass'])
 	sel.clickById('Login')
 	for i in range(10):
 		if sel.getTitle() == 'Login | Salesforce':
