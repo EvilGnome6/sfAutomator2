@@ -12,6 +12,9 @@ def initialize():
 def getUrl(url):
 	driver.get(url)
 
+def getTitle():
+	return driver.title
+
 def sendKeysById(keystring, elementId):
 	element = driver.find_element_by_id(elementId)
 	element.send_keys(keystring)

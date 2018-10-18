@@ -5,6 +5,6 @@ import time
 def new():
 	sel.getUrl(env.login['url'] + '/lightning/o/Account/home')
 	for i in range(10):
-		result = sel.clickByClassNameAndAttribute('slds-button', 'innerText', 'New')
+		result = sel.clickByClassNameAndAttribute('forceActionLink', 'text', 'New')
 		if result == True: break
 		else: time.sleep(1)
