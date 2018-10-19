@@ -67,9 +67,10 @@ def fillLightningForm(field, value):
 		#Find the label for the field
 		elements = driver.find_elements_by_class_name('label')
 		for element in elements:
-			if (element.get_attribute('innerText') == field) or (element.get_attribute('innerText') == (field + '*')):
+			if (element.get_attribute('innerText') == field) \
+			or (element.get_attribute('innerText') == (field + '*')) \
+			or (element.get_attribute('innerText') == (field + '\n*')):
 				break
-
 		#If the label has an htmlFor attribute, that's the elementId for the input field
 		elementId = getElementAttribute(element, 'htmlFor')
 		if (elementId != False) and (elementId != None):
