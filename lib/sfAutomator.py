@@ -1,14 +1,19 @@
-from lib import selFunctions as sel
 from lib import sfAccount
 from lib import sfLogin
 
-def login():
-	result = sfLogin.login()
-	if result == False:
-		print('Login failed')
-		exit()
-	elif result == True:
-		print('Logged in\n')
 
+# Login functions
+def login():
+    result = sfLogin.login()
+    return result
+
+
+# Account Functions
 def newAccount():
-	sfAccount.new()
+    result = sfAccount.new()
+    return result
+
+
+def deleteAccount(accountId):
+    result = sfAccount.delete(accountId)
+    return result

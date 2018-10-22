@@ -1,6 +1,7 @@
 from lib import sfAutomator as sf
 
 sf.login()
-sf.newAccount()
+account1 = sf.newAccount()
+sf.deleteAccount(account1)
 
 print('Script Complete')
