@@ -8,7 +8,9 @@ def initialize():
     chrome_options = Options()
     chrome_options.add_argument('--disable-notifications')
     driver = webdriver.Chrome(chrome_options=chrome_options)
-    driver.maximize_window()
+    # driver.maximize_window()
+    driver.set_window_position(0, 0)
+    driver.set_window_size(965, 1055)
 
 
 def getCurrentUrl():
