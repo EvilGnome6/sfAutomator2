@@ -4,7 +4,7 @@ import environment as env
 import time
 
 
-def new():
+def create():
     print('Creating Account...')
     # Open the Accounts page
     sel.getUrl(env.login['url'] + '/lightning/o/Account/home')
@@ -77,3 +77,20 @@ def delete(accountId):
         print('Could not click Delete button')
         print('Could not delete Account: ' + accountId + '\n')
         return False
+
+
+def validate(accountId):
+    print('Validating Account...')
+    # Navigate to the Account page
+    sel.getUrl(env.login['url'] + '/' + accountId)
+    # Click the Details tab
+    for i in range(30):
+        result = sel.clickByLinkText('Details')
+        if result is True:
+            break
+        else:
+            time.sleep(1)
+    # Validate account parameters
+    for field in pars.account:
+        result = sel.validateLightningForm(field, pars.account[field])
+    print('Account validated\n')

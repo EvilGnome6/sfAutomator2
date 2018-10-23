@@ -8,12 +8,22 @@ def login():
     return result
 
 
+def logout():
+    result = sfLogin.logout()
+    return result
+
+
 # Account Functions
-def newAccount():
-    result = sfAccount.new()
+def createAccount():
+    result = sfAccount.create()
     return result
 
 
 def deleteAccount(accountId):
     result = sfAccount.delete(accountId)
+    return result
+
+
+def validateAccount(accountId):
+    result = sfAccount.validate(accountId)
     return result

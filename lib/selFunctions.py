@@ -8,9 +8,9 @@ def initialize():
     chrome_options = Options()
     chrome_options.add_argument('--disable-notifications')
     driver = webdriver.Chrome(chrome_options=chrome_options)
-    # driver.maximize_window()
-    driver.set_window_position(0, 0)
-    driver.set_window_size(965, 1055)
+    driver.maximize_window()
+    # driver.set_window_position(0, 0)
+    # driver.set_window_size(965, 1055)
 
 
 def getCurrentUrl():
@@ -68,6 +68,14 @@ def clickByLinkText(linkText):
         return False
 
 
+def findChildByClassName(element, className):
+    try:
+        child = element.find_element_by_class_name(className)
+        return child
+    except Exception:
+        return False
+
+
 def findElementByClassNameAndAttribute(className, attribute, value):
     try:
         elements = driver.find_elements_by_class_name(className)
@@ -75,6 +83,14 @@ def findElementByClassNameAndAttribute(className, attribute, value):
             if element.get_attribute(attribute) == value:
                 return element
         return False
+    except Exception:
+        return False
+
+
+def findElementById(elementId):
+    try:
+        element = driver.find_element_by_id(elementId)
+        return element
     except Exception:
         return False
 
@@ -96,14 +112,30 @@ def fillLightningForm(field, value):
                element.get_attribute('innerText') == (field + '*') or \
                element.get_attribute('innerText') == (field + '\n*'):
                     break
-        # If the label has an htmlFor attribute
-        # that is the elementId for the input field
+        # If the label has an htmlFor attribute that is the elementId for the input field
         elementId = getElementAttribute(element, 'htmlFor')
         if (elementId is not False) and (elementId is not None):
-            result = sendKeysById(elementId, value)
-            print('    ' + field + ' = ' + value)
-            return True
-        # If not, this is a select box so we need to find the child field
+            element = findElementById(elementId)
+            # Determine the type of input field this is
+            inputType = element.get_attribute('type')
+            # Take the appropriate action based on type
+            if inputType == 'text' or \
+               inputType == 'tel' or \
+               inputType == 'url':
+                result = sendKeysElement(element, value)
+                print('    ' + field + ' = ' + value)
+                return True
+            elif inputType == 'checkbox':
+                # Determine the status of the checkbox
+                checked = element.get_attribute('checked')
+                # If the status doesn't match, click the checkbox
+                if checked != value:
+                    element.click()
+                    result = sendKeysElement(element, value)
+                    print('    ' + field + ' = ' + value)
+            else:
+                print('Could not identify type of input field ' + inputType)
+        # If there is no htmlFor attribute, this is a select box so we need to find the child field
         else:
             parent = element.find_element_by_xpath('parent::*')
             child = parent.find_element_by_class_name('select')
@@ -115,10 +147,42 @@ def fillLightningForm(field, value):
                     break
                 else:
                     time.sleep(1)
-
+        # Return result
         if result is True:
             return True
         else:
             return False
     except Exception:
         return False
+
+
+def validateLightningForm(field, expectedValue):
+    # Find the field label
+    for i in range(30):
+        element = findElementByClassNameAndAttribute('test-id__field-label', 'innerText', field)
+        if element is not False:
+            break
+        else:
+            time.sleep(1)
+    # Move up to the parent element
+    parent = element.find_element_by_xpath('parent::*')
+    parent = parent.find_element_by_xpath('parent::*')
+    # Search for the different child types
+    childTypes = ['uiOutputText', 'uiOutputCheckbox', 'test-id__field-value']
+    for childType in childTypes:
+        child = findChildByClassName(parent, childType)
+        if child is not False:
+            break
+    if childType == 'uiOutputCheckbox':
+        if 'alt="True"' in child.get_attribute('innerHTML'):
+            actualValue = 'true'
+        else:
+            actualValue = 'false'
+    else:
+        actualValue = child.get_attribute('innerText')
+    if expectedValue == actualValue:
+        result = 'Pass'
+    else:
+        result = 'Fail'
+    print('    Field: ' + field + ' | Expected: ' + expectedValue +
+          ' | Actual: ' + actualValue + ' | Result: ' + result)
