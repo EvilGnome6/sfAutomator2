@@ -21,5 +21,4 @@ sf.deleteAccount(account1)
 # Log out of Salesforce
 sf.logout()
 
-
 print('Script Complete')
