@@ -1,10 +1,11 @@
 from lib import selFunctions as sel
+from lib import utilities as utils
 import environment as env
 import time
 
 
 def login():
-    print('Logging in...')
+    utils.log('Logging in...')
     sel.initialize()
     sel.getUrl(env.login['url'])
     sel.sendKeysById('username', env.login['user'])
@@ -23,14 +24,14 @@ def login():
         else:
             time.sleep(1)
     if result is False:
-        print('Login failed\n')
+        utils.log('Login failed\n')
         exit()
     elif result is True:
-        print('Logged in\n')
+        utils.log('Logged in\n')
 
 
 def logout():
-    print('Logging out...')
+    utils.log('Logging out...')
     sel.getUrl(env.login['url'])
     # Wait for Home page to load
     for i in range(30):
@@ -63,8 +64,8 @@ def logout():
             time.sleep(1)
     # Log result and return
     if result is True:
-        print('Logged out\n')
+        utils.log('Logged out\n')
         return True
     else:
-        print('Logout failed')
+        utils.log('Logout failed')
         return False

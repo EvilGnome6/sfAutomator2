@@ -1,3 +1,4 @@
+from lib import utilities as utils
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import time
@@ -42,9 +43,20 @@ def sendKeysElement(element, keystring):
         return False
 
 
+def clickElement(element):
+    try:
+        element.clcik()
+        return True
+    except Exception:
+        return False
+
+
 def clickById(elementId):
-    element = driver.find_element_by_id(elementId)
-    element.click()
+    try:
+        element = driver.find_element_by_id(elementId)
+        element.click()
+    except Exception:
+        return False
 
 
 def clickByClassNameAndAttribute(className, attribute, value):
@@ -123,7 +135,7 @@ def fillLightningForm(field, value):
                inputType == 'tel' or \
                inputType == 'url':
                 result = sendKeysElement(element, value)
-                print('    ' + field + ' = ' + value)
+                utils.log('    ' + field + ' = ' + value)
                 return True
             elif inputType == 'checkbox':
                 # Determine the status of the checkbox
@@ -132,9 +144,9 @@ def fillLightningForm(field, value):
                 if checked != value:
                     element.click()
                     result = sendKeysElement(element, value)
-                    print('    ' + field + ' = ' + value)
+                    utils.log('    ' + field + ' = ' + value)
             else:
-                print('Could not identify type of input field ' + inputType)
+                utils.log('Could not identify type of input field ' + inputType)
         # If there is no htmlFor attribute, this is a select box so we need to find the child field
         else:
             parent = element.find_element_by_xpath('parent::*')
@@ -143,7 +155,7 @@ def fillLightningForm(field, value):
             for i in range(3):
                 result = clickByLinkText(value)
                 if result is True:
-                    print('    ' + field + ' = ' + value)
+                    utils.log('    ' + field + ' = ' + value)
                     break
                 else:
                     time.sleep(1)
@@ -184,5 +196,5 @@ def validateLightningForm(field, expectedValue):
         result = 'Pass'
     else:
         result = 'Fail'
-    print('    Field: ' + field + ' | Expected: ' + expectedValue +
-          ' | Actual: ' + actualValue + ' | Result: ' + result)
+    utils.log('    Field: ' + field + ' | Expected: ' + expectedValue +
+              ' | Actual: ' + actualValue + ' | Result: ' + result)

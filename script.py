@@ -1,4 +1,10 @@
 from lib import sfAutomator as sf
+from lib import parameters as pars
+import os
+
+# Set up the Log File
+pars.logFile = os.path.basename(__file__)
+sf.setupLogFile()
 
 # Log in to Salesforce
 sf.login()

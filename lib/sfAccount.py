@@ -1,11 +1,12 @@
 from lib import parameters as pars
 from lib import selFunctions as sel
+from lib import utilities as utils
 import environment as env
 import time
 
 
 def create():
-    print('Creating Account...')
+    utils.log('Creating Account...')
     # Open the Accounts page
     sel.getUrl(env.login['url'] + '/lightning/o/Account/home')
     # Click on the New Button
@@ -27,7 +28,7 @@ def create():
     for field in pars.account:
         result = sel.fillLightningForm(field, pars.account[field])
         if result is False:
-            print('Could not fill field: ' + field + ' with value: ' + pars.account[field])
+            utils.log('Could not fill field: ' + field + ' with value: ' + pars.account[field])
     # Click Save
     result = sel.clickByClassNameAndAttribute('forceActionButton', 'innerText', 'Save')
     # Wait until the page loads, extract the account ID from the URL and return it
@@ -38,12 +39,12 @@ def create():
         else:
             time.sleep(1)
     accountId = url.split('/')[-2]
-    print('Created Account: ' + accountId + '\n')
+    utils.log('Created Account: ' + accountId + '\n')
     return accountId
 
 
 def delete(accountId):
-    print('Deleting Account...')
+    utils.log('Deleting Account...')
     sel.getUrl(env.login['url'] + '/' + accountId)
     # Click the Show more actions icon
     for i in range(10):
@@ -53,7 +54,7 @@ def delete(accountId):
         else:
             time.sleep(1)
     if result is False:
-        print('Could not click Show more Actions icon')
+        utils.log('Could not click Show more Actions icon')
     # Click the Delete option
     for i in range(3):
         result = sel.clickByLinkText('Delete')
@@ -62,7 +63,7 @@ def delete(accountId):
         else:
             time.sleep(1)
     if result is False:
-        print('Could not click Delete option')
+        utils.log('Could not click Delete option')
     # Click the Delete button
     for i in range(3):
         result = sel.clickByClassNameAndAttribute('forceActionButton', 'innerText', 'Delete')
@@ -71,16 +72,16 @@ def delete(accountId):
         else:
             time.sleep(1)
     if result is True:
-        print('Deleted Account: ' + accountId + '\n')
+        utils.log('Deleted Account: ' + accountId + '\n')
         return True
     else:
-        print('Could not click Delete button')
-        print('Could not delete Account: ' + accountId + '\n')
+        utils.log('Could not click Delete button')
+        utils.log('Could not delete Account: ' + accountId + '\n')
         return False
 
 
 def validate(accountId):
-    print('Validating Account...')
+    utils.log('Validating Account...')
     # Navigate to the Account page
     sel.getUrl(env.login['url'] + '/' + accountId)
     # Click the Details tab
@@ -93,4 +94,4 @@ def validate(accountId):
     # Validate account parameters
     for field in pars.account:
         result = sel.validateLightningForm(field, pars.account[field])
-    print('Account validated\n')
+    utils.log('Account validated\n')
