@@ -1,4 +1,0 @@
-# .gitignore sample 
-###################
-# Please ignore this file.  The purpose of this file is to commit empty folder
-# Also, We should take care of deleting this file during ant metadata migration(deployments)
