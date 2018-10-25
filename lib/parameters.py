@@ -4,7 +4,7 @@ account = {
     'Account Site': 'Account Site Text',
     'Type': 'Pending',
     'Industry': 'Apparel',
-    'Annual Revenue': '$1,000,000',
+    'Annual Revenue': '1,000,000',
     'Match Billing Address': 'true',
     'Rating': 'Warm',
     'Phone': '6028675309',

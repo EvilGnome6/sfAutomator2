@@ -65,7 +65,7 @@ def delete(accountId):
     if result is False:
         utils.log('Could not click Delete option')
     # Click the Delete button
-    for i in range(3):
+    for i in range(10):
         result = sel.clickByClassNameAndAttribute('forceActionButton', 'innerText', 'Delete')
         if result is True:
             break
@@ -81,7 +81,10 @@ def delete(accountId):
 
 
 def validate(accountId):
-    utils.log('Validating Account...')
+    utils.log('Validating Account ' + accountId + ' ...')
+    # Start logging results
+    utils.results('Validate Account:,' + accountId)
+    utils.results('Field,Expected,Actual,Result')
     # Navigate to the Account page
     sel.getUrl(env.login['url'] + '/' + accountId)
     # Click the Details tab
@@ -91,7 +94,9 @@ def validate(accountId):
             break
         else:
             time.sleep(1)
-    # Validate account parameters
+    # Initialize the test result, validate account parameters and log result
+    pars.testResult = 'Pass'
     for field in pars.account:
         result = sel.validateLightningForm(field, pars.account[field])
-    utils.log('Account validated\n')
+    utils.results('Result:,' + pars.testResult)
+    utils.log('Account ' + accountId + ' validated\n')

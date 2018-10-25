@@ -1,4 +1,5 @@
 from lib import utilities as utils
+from lib import parameters as pars
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import time
@@ -196,5 +197,7 @@ def validateLightningForm(field, expectedValue):
         result = 'Pass'
     else:
         result = 'Fail'
+        pars.testResult = 'Fail'
     utils.log('    Field: ' + field + ' | Expected: ' + expectedValue +
               ' | Actual: ' + actualValue + ' | Result: ' + result)
+    utils.results('"' + field + '","' + expectedValue + '","' + actualValue + '","' + result + '"')
