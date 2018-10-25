@@ -1,3 +1,4 @@
+import environment as env
 from lib import utilities as utils
 from lib import parameters as pars
 from selenium import webdriver
@@ -10,9 +11,19 @@ def initialize():
     chrome_options = Options()
     chrome_options.add_argument('--disable-notifications')
     driver = webdriver.Chrome(chrome_options=chrome_options)
-    driver.maximize_window()
-    # driver.set_window_position(0, 0)
-    # driver.set_window_size(965, 1055)
+    try:
+        driver.set_window_position(env.window_position[0], env.window_position[1])
+        driver.set_window_size(env.window_size[0], env.window_size[1])
+    except Exception:
+        driver.maximize_window()
+
+
+def quit():
+    try:
+        driver.quit()
+        return True
+    except Exception:
+        return False
 
 
 def getCurrentUrl():

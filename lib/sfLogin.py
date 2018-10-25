@@ -62,8 +62,9 @@ def logout():
             break
         else:
             time.sleep(1)
-    # Log result and return
+    # Log result, close browser and return
     if result is True:
+        sel.quit()
         utils.log('Logged out\n')
         return True
     else:

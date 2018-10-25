@@ -99,4 +99,5 @@ def validate(accountId):
     for field in pars.account:
         result = sel.validateLightningForm(field, pars.account[field])
     utils.results('Result:,' + pars.testResult)
+    utils.log('    Result: ' + pars.testResult)
     utils.log('Account ' + accountId + ' validated\n')

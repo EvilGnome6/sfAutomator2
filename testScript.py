@@ -18,7 +18,7 @@ account1 = sf.createAccount()
 sf.validateAccount(account1)
 
 # # Delete Account
-# sf.deleteAccount(account1)
+sf.deleteAccount(account1)
 
 # Log out of Salesforce
 sf.logout()
