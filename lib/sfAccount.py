@@ -5,7 +5,7 @@ import environment as env
 import time
 
 
-def create():
+def create(accountType):
     utils.log('Creating Account...')
     # Open the Accounts page
     sel.getUrl(env.login['url'] + '/lightning/o/Account/home')
@@ -25,8 +25,8 @@ def create():
         else:
             time.sleep(1)
     # Send account parameters to form
-    for field in pars.account:
-        result = sel.fillLightningForm(field, pars.account[field])
+    for field in pars.account[accountType]:
+        result = sel.fillLightningForm(field, pars.account[accountType][field])
         if result is False:
             utils.log('Could not fill field: ' + field + ' with value: ' + pars.account[field])
     # Click Save
@@ -80,7 +80,7 @@ def delete(accountId):
         return False
 
 
-def validate(accountId):
+def validate(accountId, values):
     utils.log('Validating Account ' + accountId + ' ...')
     # Start logging results
     utils.results('Validate Account:,' + accountId)
@@ -96,8 +96,8 @@ def validate(accountId):
             time.sleep(1)
     # Initialize the test result, validate account parameters and log result
     pars.testResult = 'Pass'
-    for field in pars.account:
-        result = sel.validateLightningForm(field, pars.account[field])
-    utils.results('Result:,' + pars.testResult)
+    for field in values:
+        result = sel.validateLightningForm(field, values[field])
+    utils.results('Result:,' + pars.testResult + '\n')
     utils.log('    Result: ' + pars.testResult)
     utils.log('Account ' + accountId + ' validated\n')

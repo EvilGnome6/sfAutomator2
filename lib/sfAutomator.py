@@ -4,8 +4,8 @@ from lib import utilities as utils
 
 
 # sfAccount Functions
-def createAccount():
-    result = sfAccount.create()
+def createAccount(accountType):
+    result = sfAccount.create(accountType)
     return result
 
 
@@ -14,8 +14,8 @@ def deleteAccount(accountId):
     return result
 
 
-def validateAccount(accountId):
-    result = sfAccount.validate(accountId)
+def validateAccount(accountId, values):
+    result = sfAccount.validate(accountId, values)
     return result
 
 
