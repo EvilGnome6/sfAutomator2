@@ -2,8 +2,8 @@ from lib import parameters as pars
 import datetime
 
 
-def setupLogFile():
-    pars.logFile = (pars.logFile[:-3] + '-' + (datetime.datetime.now().strftime("%y%m%d-%Hh%M")) + '.log')
+def init(parameters):
+    pars.logFile = (parameters['testName'] + (datetime.datetime.now().strftime("%y%m%d-%Hh%M")) + '.log')
     pars.resultsFile = pars.logFile.replace('.log', '.csv')
     return True
 

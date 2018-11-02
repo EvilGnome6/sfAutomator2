@@ -4,18 +4,18 @@ from lib import utilities as utils
 
 
 # sfAccount Functions
-def createAccount(accountType):
-    result = sfAccount.create(accountType)
+def createAccount(parameters):
+    result = sfAccount.create(parameters)
     return result
 
 
-def deleteAccount(accountId):
-    result = sfAccount.delete(accountId)
+def deleteAccount(parameters):
+    result = sfAccount.delete(parameters)
     return result
 
 
-def validateAccount(accountId, values):
-    result = sfAccount.validate(accountId, values)
+def validateAccount(parameters):
+    result = sfAccount.validate(parameters)
     return result
 
 
@@ -31,6 +31,6 @@ def logout():
 
 
 # utilities functions
-def setupLogFile():
-    result = utils.setupLogFile()
+def init(parameters):
+    result = utils.init(parameters)
     return result
