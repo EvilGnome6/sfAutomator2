@@ -11,6 +11,7 @@ def login():
     sel.sendKeysById('username', env.login['user'])
     sel.sendKeysById('password', env.login['pass'])
     sel.clickById('Login')
+    result = False
     for i in range(10):
         if sel.getTitle() == 'Login | Salesforce' or \
            sel.getTitle() == 'Verify Your Identity | Salesforce' or \
