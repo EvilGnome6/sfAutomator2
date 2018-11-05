@@ -2,7 +2,7 @@ from lib import sfAutomator as sf
 
 # Initialize the Test
 sf.init({
-    'testName': 'testScript',
+    'testName': 'demoScript',
 })
 
 # Log in to Salesforce
