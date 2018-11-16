@@ -2,7 +2,7 @@ from lib import parameters as pars
 import datetime
 
 
-def init(parameters={'testName': 'manual'}):
+def init(parameters):
     pars.logFile = (parameters['testName'] + (datetime.datetime.now().strftime("%y%m%d-%Hh%M")) + '.log')
     pars.resultsFile = pars.logFile.replace('.log', '.csv')
     return True
