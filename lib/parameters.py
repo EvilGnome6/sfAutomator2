@@ -34,3 +34,6 @@ account = {
         'SIC Code': 'SIC',
     }
 }
+
+logFile = 'manual.log'
+resultsFile = 'manual.csv'
