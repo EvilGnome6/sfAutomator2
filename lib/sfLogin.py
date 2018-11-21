@@ -23,6 +23,8 @@ def login():
             result = True
         elif ' - Console' in sel.getTitle():
             result = True
+        elif ' | Salesforce' in sel.getTitle():
+            result = True
         else:
             time.sleep(1)
     if result is False:
